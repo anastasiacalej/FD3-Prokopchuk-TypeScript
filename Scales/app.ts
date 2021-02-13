@@ -11,15 +11,15 @@ class Scales {
         this.products.push(product);
     }
 
-    getSumScale ():void {
-        var SumScale=0;//произойдет автотипизация
-        this.products.forEach ((product:Product):void => {SumScale+=product.scale});
-        console.log('Суммарный вес всех продуктов: '+SumScale);
+    getSumScale ():number {
+        var SumScale:number=0;
+        this.products.forEach ((product:Product):void => {SumScale+=product.getScale()});
+        return SumScale;
     }
 
-    getNameList ():void {    
-        let listProd=this.products.map ((product:Product):string => product.name);//произойдет автотипизация к типу Array<string>
-        console.log(listProd);
+    getNameList ():Array<string> {    
+        let listProd:Array<string> = this.products.map ((product:Product):string => product.getName());
+        return listProd; 
     }  
 }
 
@@ -30,60 +30,33 @@ class Product {
 
     scale:number;
 
-    constructor() {
-        this.name='';
-        this.scale=0; 
+    constructor(_name:string,_scale:number) {
+        this.name=_name;
+        this.scale=_scale; 
     }
 
-    getName(_name:string):void {
-       this.name=_name;
+    getName():string {
+       return this.name;
     }
 
-    getScale(_scale:number):void {
-       this.scale=_scale;
+    getScale():number {
+       return this.scale;
     }
 }
 
 
 class Apple extends Product {
-
-    name:string;
-
-    scale:number;
-   
+ 
     constructor(_name:string,_scale:number) {
-        super(); 
-        this.name='яблоко '+ _name;
-        this.scale=_scale; 
+        super(('яблоко "'+ _name+'"'),_scale); 
     }
 
-    getName():void {
-        super.getName(this.name);
-    }
-
-    getScale():void {
-        super.getScale(this.scale);
-    }    
 }
 
 class Tomato extends Product {
-    
-    name:string;
-
-    scale:number;
    
     constructor(_name:string,_scale:number) {
-        super(); 
-        this.name='помидор '+_name;
-        this.scale=_scale; 
-    }
-
-    getName():void {
-        super.getName(this.name);
-    }
-
-    getScale():void {
-        super.getScale(this.scale);
+        super(('помидор "'+ _name+'"'),_scale); 
     }
 }
 
@@ -108,9 +81,9 @@ scales.add(tomato2);
 scales.add(tomato3);
 scales.add(tomato4);
 
-scales.getSumScale();
+console.log(scales.getSumScale());
 
 console.log('Проверка: '+
 (apple1.scale+apple2.scale+apple3.scale+apple4.scale+tomato1.scale+tomato2.scale+tomato3.scale+tomato4.scale));
 
-scales.getNameList();
+console.log(scales.getNameList());
